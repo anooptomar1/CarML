@@ -48,7 +48,18 @@ class ViewController: UIViewController {
         self.kmsLabel.text = "Kilometraje: \(formattedKms) kms"
         
         //Hacer el calculo del valor del coche con ML
-         
+        if let prediction = try? cars.prediction(
+            modelo: Double(self.modelSegmentedControl.selectedSegmentIndex),
+            extras: self.extrasSwitch.isOn ? 1.0 : 0.0,
+            kilometraje: Double(self.kmsSlider.value),
+            estado: Double(self.statusSegmentedControl.selectedSegmentIndex)) {
+            let clampValue = max(500, prediction.precio)
+            formatter.numberStyle = .currency
+            self.priceLabel.text = formatter.string(for: clampValue)
+        } else {
+            self.priceLabel.text = "Error"
+        }
+        
     }
     
 }
