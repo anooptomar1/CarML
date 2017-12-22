@@ -22,9 +22,15 @@ class ViewController: UIViewController {
     @IBOutlet weak var statusSegmentedControl: UISegmentedControl!
     @IBOutlet weak var priceLabel: UILabel!
     
+    let cars = Cars()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        self.stackView.setCustomSpacing(25, after: self.modelSegmentedControl)
+        self.stackView.setCustomSpacing(25, after: self.extrasSwitch)
+        self.stackView.setCustomSpacing(25, after: self.kmsSlider)
+        self.stackView.setCustomSpacing(50, after: self.statusSegmentedControl)
+        self.calculateValue()
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,6 +40,15 @@ class ViewController: UIViewController {
 
     @IBAction func calculateValue() {
         
+        //Formatear el valor del slider
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        let formattedKms = formatter.string(for: self.kmsSlider.value) ?? "0"
+        self.kmsLabel.text = "Kilometraje: \(formattedKms) kms"
+        
+        //Hacer el calculo del valor del coche con ML
+         
     }
     
 }
